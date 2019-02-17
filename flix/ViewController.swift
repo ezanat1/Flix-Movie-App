@@ -17,6 +17,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -64,9 +65,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         cell.posterLabel.af_setImage(withURL: posterUrl!)
         
-        return cell
+        
+            return cell
+        }
+    
+        
+    override func prepare(for segue: UIStoryboardSegue, sender : Any? ){
+        
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        
+        let detailViewController = segue.destination as! DetailViewController
+        detailViewController.movie = movie
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-
-
 }
-
